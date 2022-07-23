@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import url.Urls;
 
-public class IFrame implements Urls {
+public class iFrame implements Urls {
     public static void main(String[] args) {
 
         //Get chrome session
@@ -14,7 +14,7 @@ public class IFrame implements Urls {
 
         try {
             //Navigate to target page
-            driver.get(baseUrl.concat(iframeSlug));
+            driver.get(baseUrl.concat(hoverSlug));
 
             //locate the iframe
             By iFrameSel = By.cssSelector("[id$='ifr']");
