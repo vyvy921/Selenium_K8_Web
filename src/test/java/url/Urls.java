@@ -7,6 +7,7 @@ String dropdownSlug = "/dropdown";
 String iframeSlug = "/iframe";
 String hoverSlug = "/hovers";
 String jsArlertSlug = "/javascript_alerts";
+String dynamicControlSlug = "/dynamic_controls";
 
 
 }
