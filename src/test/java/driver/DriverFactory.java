@@ -34,7 +34,7 @@ public class DriverFactory {
         WebDriver driver = new ChromeDriver(chromeOptions);
 
         // Intercal time | 500 mili seconds = 0.5s
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
 
         return driver;
 
