@@ -1,13 +1,14 @@
 package url;
 
 public interface Urls {
-String baseUrl = "https://the-internet.herokuapp.com";
-String loginSlug = "/login";
-String dropdownSlug = "/dropdown";
-String iframeSlug = "/iframe";
-String hoverSlug = "/hovers";
-String jsArlertSlug = "/javascript_alerts";
-String dynamicControlSlug = "/dynamic_controls";
+    String demoBaseUrl = "http://demowebshop.tricentis.com";
+    String baseUrl = "https://the-internet.herokuapp.com";
+    String loginSlug = "/login";
+    String dropdownSlug = "/dropdown";
+    String iframeSlug = "/iframe";
+    String hoverSlug = "/hovers";
+    String jsArlertSlug = "/javascript_alerts";
+    String dynamicControlSlug = "/dynamic_controls";
 
 
 }
