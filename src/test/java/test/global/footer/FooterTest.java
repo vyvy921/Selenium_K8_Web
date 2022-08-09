@@ -6,39 +6,58 @@ import models.components.global.footer.FooterColumnComponent;
 import models.components.global.footer.InformationColumnComponent;
 import models.pages.HomePage;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+import support.verification.Verifier;
 import url.Urls;
 
 public class FooterTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void testFooterHomePage() {
         WebDriver driver = DriverFactory.getChromeDriver();
+        driver.get(Urls.demoBaseUrl);
+        try {
+            HomePage homePage = new HomePage(driver);
+            InformationColumnComponent informationColumnComp = homePage.footerComp().informationColumnComp();
 
-        testFooterHomePage(driver);
-        testFooterCategoryPage(driver);
-        testFooterRegisterPage(driver);
-        testFooterLoginPage(driver);
+            CustomerServiceColumnComponent customerServiceColumnComp = homePage.footerComp().customerServiceColumnComp();
+            testFooterColumn(informationColumnComp);
+            testFooterColumn(customerServiceColumnComp);
+        } catch (Exception ignored) {
+        }
+
         driver.quit();
     }
 
-    private static void testFooterHomePage(WebDriver driver) {
-
-        driver.get(Urls.demoBaseUrl);
-        HomePage homePage = new HomePage(driver);
-        InformationColumnComponent informationColumnComp = homePage.footerComp().informationColumnComp();
-
-        CustomerServiceColumnComponent customerServiceColumnComp = homePage.footerComp().customerServiceColumnComp();
-        testFooterColumn(informationColumnComp);
-        testFooterColumn(customerServiceColumnComp);
+    @Test
+    public void testFooterCategoryPage() {
     }
 
-    private static void testFooterCategoryPage(WebDriver driver) {
+    @Test
+    public void testFooterRegisterPage() {
+        String actualResult = "Teo";
+        String expectedResult = "Ti";
+//        Verifier.verifyEquals(actualResult, expectedResult);
+        Assert.assertEquals(actualResult,expectedResult,"[ERR] Welcome message is incorrect");
+        Assert.assertTrue(actualResult.equals(expectedResult),"...");
+        Assert.assertFalse(actualResult.equals(expectedResult),"....");
+        Assert.fail();
+        Assert.fail(".....");
     }
 
-    private static void testFooterRegisterPage(WebDriver driver) {
+    @Test
+    public void testFooterLoginPage() {
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(1,2);
+        softAssert.assertEquals(true,true);
+        softAssert.assertEquals(2,3);
+
+        softAssert.assertAll();
+        System.out.println("hello");
     }
 
-    private static void testFooterLoginPage(WebDriver driver) {
-    }
     private static void testFooterColumn(FooterColumnComponent footerColumnComponent) {
         System.out.println(footerColumnComponent.headerElem().getText());
         footerColumnComponent.linksElem().forEach(link -> {
