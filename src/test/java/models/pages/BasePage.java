@@ -1,6 +1,7 @@
 package models.pages;
 
 import models.components.Component;
+import models.components.global.TopMenuComponent;
 import models.components.global.footer.FooterComponent;
 //import models.components.product.ProductGridComponent;
 import models.components.product.ProductGridComponent;
@@ -16,11 +17,15 @@ public class BasePage extends Component {
         this.driver = driver;
     }
 
-    public ProductGridComponent productGridComp(){
+    public TopMenuComponent topMenuComponent() {
+        return findComponent(TopMenuComponent.class, driver);
+    }
+
+    public ProductGridComponent productGridComp() {
         return findComponent(ProductGridComponent.class, driver);
     }
 
-    public FooterComponent footerComp(){
+    public FooterComponent footerComp() {
         return findComponent(FooterComponent.class, driver);
     }
 }
