@@ -82,13 +82,13 @@ public class FooterTestFlow {
         String randomCatHref = randomMainItemElem.catItemLinkElem().getAttribute("href");
 
         // Get sublist
-        List<TopMenuComponent.CatItemComponent> catItemComps = randomMainItemElem.catItemComps();
+        List<TopMenuComponent.SublistComponent> sublistComps = randomMainItemElem.sublistComps();
 
-        if (catItemComps.isEmpty()) {
+        if (sublistComps.isEmpty()) {
             randomMainItemElem.catItemLinkElem().click();
         } else {
-            int randomIndex = new SecureRandom().nextInt(catItemComps.size());
-            TopMenuComponent.CatItemComponent randomCatItemComp = catItemComps.get(randomIndex);
+            int randomIndex = new SecureRandom().nextInt(sublistComps.size());
+            TopMenuComponent.SublistComponent randomCatItemComp = sublistComps.get(randomIndex);
             randomCatHref = randomCatItemComp.getComponent().getAttribute("href");
             randomCatItemComp.getComponent().click();
         }
