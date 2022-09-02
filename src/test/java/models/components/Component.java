@@ -1,6 +1,7 @@
 package models.components;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -23,7 +24,6 @@ public class Component {
         this.component = component;
         this.wait = new WebDriverWait(this.driver, Duration.ofSeconds(15));
     }
-
 
     public WebElement getComponent() {
         return component;
@@ -85,5 +85,17 @@ public class Component {
             throw new IllegalArgumentException("Component class " + componentClass + " must have annotation "
                     + ComponentCssSelector.class.getSimpleName() + " or " + ComponentXpathSelector.class.getSimpleName());
         }
+    }
+
+    public void scrollUpToElement(WebElement element){
+        scrollToElement("false", element);
+    }
+
+    public void scrollDownToElement(WebElement element){
+        scrollToElement("true", element);
+    }
+
+    private void scrollToElement(String position, WebElement element){
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(" + position + ");", element);
     }
 }

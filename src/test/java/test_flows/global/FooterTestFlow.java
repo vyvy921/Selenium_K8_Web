@@ -72,7 +72,7 @@ public class FooterTestFlow {
     public void verifyProductCatFooterComponent() {
         // Random pickup an item
         BasePage basePage = new BasePage(driver);
-        TopMenuComponent topMenuComp = basePage.topMenuComponent();
+        TopMenuComponent topMenuComp = basePage.topMenuComp();
         List<TopMenuComponent.MainCatItem> mainCatsElem = topMenuComp.mainItemsElem();
 
         if (mainCatsElem.isEmpty()) {
