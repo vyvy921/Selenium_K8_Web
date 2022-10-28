@@ -1,5 +1,5 @@
 ## Command to start Hub
-java -jar selenium-server-4.1.2.jar hub
+java -jar selenium-server-4.5.2.jar hub
 
 ## Command to start Node
 This node will register:

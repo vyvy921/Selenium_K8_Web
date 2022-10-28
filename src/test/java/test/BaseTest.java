@@ -10,38 +10,50 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class BaseTest {
 
-    protected static WebDriver driver;
+    private final static List<DriverFactory> webdriverThreadPool = Collections.synchronizedList(new ArrayList<>());
+    private static ThreadLocal<DriverFactory> driverThread;
+    private String browser;
 
-    @BeforeTest
-    public void initBrowserSession() {
-        driver = DriverFactory.getChromeDriver();
+    protected WebDriver getDriver(){
+        return driverThread.get().getDriver(browser);
+    }
 
+    @BeforeTest(description = "Init browser session")
+    @Parameters({"browser"})
+    public void initBrowserSession(String browser){
+        this.browser = browser;
+        driverThread = ThreadLocal.withInitial(() ->{
+            DriverFactory webdriverThread = new DriverFactory();
+            webdriverThreadPool.add(webdriverThread);
+            return webdriverThread;
+        });
     }
 
     @AfterTest(alwaysRun = true)
-    public void closeBrowserSession() {
-        if (driver != null) driver.quit();
+    public void closeBrowserSession(){
+        driverThread.get().closeBrowserSession();
     }
 
     @AfterMethod
-    public void captureScreenshot(ITestResult result) {
-        if (result.getStatus() == ITestResult.FAILURE) {
-            // testMethodName-yyyy-mm-dd-hr-m-sec.png
+    public void captureScreenshot(ITestResult result){
+        if(result.getStatus() == ITestResult.FAILURE){
+            // testMethodName-yyyy-m-dd-hr-mm-sec.png
 
             // 1. Get method name
             String methodName = result.getName();
-            // 2. Get taken time
+
+            // 2. Get Taken time
             Calendar calendar = new GregorianCalendar();
             int y = calendar.get(Calendar.YEAR);
             int m = calendar.get(Calendar.MONTH) + 1;
@@ -51,23 +63,25 @@ public class BaseTest {
             int sec = calendar.get(Calendar.SECOND);
             String filename = methodName + "-" + y + "-" + m + "-" + d + "-" + hr + "-" + min + "-" + sec + ".png";
 
-            // 3. Take screenshot
+            // 3. Take Screenshot
+            WebDriver driver = driverThread.get().getDriver(browser);
             File screenshotBase64Data = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 
             try {
+
                 // 4. Save
                 String fileLocation = System.getProperty("user.dir") + "/screenshots/" + filename;
                 FileUtils.copyFile(screenshotBase64Data, new File(fileLocation));
 
-                // 5. and attach to allure reporter
+                // 5. Attach to report
                 Path content = Paths.get(fileLocation);
                 try (InputStream inputStream = Files.newInputStream(content)) {
                     Allure.addAttachment(methodName, inputStream);
                 }
-            } catch (Exception e) {
+
+            } catch (Exception e){
                 e.printStackTrace();
             }
         }
     }
-
 }
