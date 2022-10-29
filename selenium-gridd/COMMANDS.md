@@ -16,4 +16,9 @@ java -jar -Dwebdriver.gecko.driver=geckodriver.exe -Dwebdriver.chrome.driver=chr
 NOTE: on Windows need to specify extension like gecko.exe, chrome.exe
 ## Next
 
+## setup mvn
+mvn clean install -DskipTests=true
+java -Dbrowser=chrome -jar target\Selenium_K8_Web-1.0-SNAPSHOT-fat-tests.jar
+
+
 In second stage, we will learn about how to set up using Docker
