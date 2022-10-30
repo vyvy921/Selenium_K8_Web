@@ -20,5 +20,14 @@ NOTE: on Windows need to specify extension like gecko.exe, chrome.exe
 mvn clean install -DskipTests=true
 java -Dbrowser=chrome -jar target\Selenium_K8_Web-1.0-SNAPSHOT-fat-tests.jar
 
+## jenkin
+java -jar jenkins.war
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+
+fbeea8dcdfef44f4a1b3d4516af6d7f1
+
+This may also be found at: C:\Users\Vy Vy\.jenkins\secrets\initialAdminPassword
+
 
 In second stage, we will learn about how to set up using Docker

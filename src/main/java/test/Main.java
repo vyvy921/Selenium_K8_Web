@@ -80,8 +80,10 @@ public class Main {
         // Add all tests into suite
         boolean isTestingOnSafari = browser.equals("safari");
         suite.setTests(allTests);
-        suite.setParallel(XmlSuite.ParallelMode.TESTS);
-        suite.setThreadCount(isTestingOnSafari ? 1 : MAX_PARALLEL_SESSION);
+        if (!isTestingOnSafari) {
+            suite.setParallel(XmlSuite.ParallelMode.TESTS);
+            suite.setThreadCount(MAX_PARALLEL_SESSION);
+        }
 
         // Run a group of test
         if (isTestingOnSafari) {
@@ -94,6 +96,5 @@ public class Main {
         }
 
         System.out.println(suite.toXml());
-
     }
 }
